@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BackgroundTasksBlocksMainThreadNET9.MainPage">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="2*" />
+			<RowDefinition Height="3*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<!-- Animation Area -->
+		<Grid Grid.Row="0" BackgroundColor="LightGray">
+			<!-- Central "Sun" -->
+			<Ellipse x:Name="Sun"
+                     WidthRequest="60"
+                     HeightRequest="60"
+                     Fill="Orange"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center" />
+			<!-- Orbiting "Planet" -->
+			<Grid x:Name="OrbitContainer"
+                  WidthRequest="200"
+                  HeightRequest="200"
+				  RowDefinitions="Auto"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center">
+				<Ellipse x:Name="Planet"
+                         WidthRequest="20"
+                         HeightRequest="20"
+                         Fill="Blue"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center"
+                         TranslationX="90" />
+			</Grid>
+			<!-- Status Label -->
+			<Label x:Name="StatusLabel"
+                   Text="Animation Running Smoothly"
+                   FontSize="16"
+                   TextColor="Black"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"
+                   Margin="0,20,0,0" />
+			<Label x:Name="InfoLabel" 
+			       TextColor="Gray" 
+			       VerticalOptions="End"
+			       Margin="5"/>
+		</Grid>
+
+		<!-- Scrollable List Area -->
+		<Grid Grid.Row="1" BackgroundColor="White">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<Label Grid.Row="0" 
+			       Text="Scroll this list to test jitter:" 
+			       FontSize="14" 
+			       FontAttributes="Bold"
+			       Margin="20,10"
+			       HorizontalOptions="Start" />
+
+			<CollectionView Grid.Row="1" 
+			                x:Name="TestListView"
+			                BackgroundColor="White"
+			                SelectionMode="None">
+				<CollectionView.ItemTemplate>
+					<DataTemplate>
+						<Grid Padding="20,10" 
+						      BackgroundColor="{Binding BackgroundColor}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+
+							<Ellipse Grid.Column="0"
+							         WidthRequest="12"
+							         HeightRequest="12"
+							         Fill="{Binding Color}"
+							         VerticalOptions="Center" />
+
+							<Label Grid.Column="1"
+							       Text="{Binding Title}"
+							       FontSize="16"
+							       VerticalOptions="Center"
+							       Margin="15,0,0,0" />
+
+							<Label Grid.Column="2"
+							       Text="{Binding Number}"
+							       FontSize="14"
+							       TextColor="Gray"
+							       VerticalOptions="Center" />
+						</Grid>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+		</Grid>
+
+		<!-- Controls -->
+		<VerticalStackLayout Grid.Row="2" 
+                             Padding="30,20"
+                             Spacing="15">
+			<Button x:Name="StartBackgroundWorkBtn"
+                    Text="Start Heavy Background Work"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    FontSize="16"
+                    Clicked="OnStartBackgroundWorkClicked"
+                    HorizontalOptions="Fill" />
+		</VerticalStackLayout>
+	</Grid>
+</ContentPage>
